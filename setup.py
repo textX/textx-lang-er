@@ -7,7 +7,7 @@ from setuptools import setup
 __author__ = "TODO <TODO AT somedomain DOT com>"
 __version__ = "0.1"
 
-NAME = 'textx-lang-ER'
+NAME = 'textx-lang-er'
 DESC = 'TODO'
 VERSION = __version__
 AUTHOR = 'TODO'

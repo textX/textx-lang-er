@@ -1,4 +1,4 @@
-text-lang-ER is a DSL built using
+text-lang-er is a DSL built using
 [textX](https://github.com/igordejanovic/textX).  It is used for specification
 of application's entity-relationship data model. From this description CRUDS
 functionality can be generated fully automatically.
