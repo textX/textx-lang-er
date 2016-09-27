@@ -1,0 +1,117 @@
+/*
+    Entity-relationship language
+*/
+
+Model:
+    'model' name=ERID desc=STRING?
+    data_types*=DataType
+    constraint_types*=ConstraintType
+    elements*=ModelElement
+;
+
+ModelElement:
+    Entity | Enum
+;
+
+
+Attribute:
+    id?='#'
+    name=ERID
+    label=STRING?
+    ref=Reference
+
+    ':' type=TypeInstance
+
+    multiplicity=Multiplicity?
+
+    (':' constraints*=Constraint[','])?
+
+    desc*=STRING
+;
+
+TypeInstance:
+    type=[Type]
+    // precision/length...
+    ('('precision_x=INT (',' precision_y=INT)? ')' )?
+;
+
+Constraint:
+    type=[ConstraintType] ('(' parameters+=BASETYPE[','] ')')?
+;
+
+
+Type:
+    Entity | Enum | DataType
+;
+
+Multiplicity:
+    '[' lower=MultiplicityBound (',' upper=MultiplicityBound )? ']'
+;
+
+MultiplicityBound:
+    INT | '*'
+;
+
+Reference:
+    containment?='+' (bidir?='<->' other_side=ERID)?
+;
+
+Entity:
+    'entity' name=FQID label=STRING?
+     ('[' constraints*=Constraint[','] ']')? '{'
+        desc*=STRING
+        attributes*=Attribute
+        compartments*=Compartment
+    '}'
+;
+
+DataType:
+    'type' name=ERID
+;
+
+Enum:
+    'enum' name=ERID label=STRING? '{'
+        enum_literals+=EnumLiteral
+    '}'
+;
+
+EnumLiteral:
+    name=ERID code=STRING label=STRING?
+;
+
+Compartment:
+    'compartment' label=STRING? '{'
+        desc*=STRING
+        attributes*=Attribute
+    '}'
+;
+
+ConstraintType:
+    'constraint' name=ERID
+        ('(' parameter_types+=ConstraintParameter[','] ')')?
+        ('applies' 'to' (applies_to_attribute?=/attribute|attr/ |
+                         applies_to_entity?='entity')+['and'])?
+;
+
+ConstraintParameter:
+    'int' | 'string' | 'attr' | '...'
+;
+
+ERID:
+    // Forbid keywords as IDs for better error reporting.
+    !Keyword ID
+;
+
+FQID[noskipws]:
+    /\s*/-
+    ERID+['.']
+;
+
+Keyword:
+    'entity' | 'package' | 'model' | 'enum' | 'constraint' | 'compartment' |
+    'applies' | 'to' | 'attr' | 'attribute' | 'and' | 'key' | 'extends'
+;
+
+Comment:
+  /\/\/.*$/|/\/\*(.|\n)*?\*\//
+;
