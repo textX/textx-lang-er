@@ -88,13 +88,8 @@ Compartment:
 
 ConstraintType:
     'constraint' name=ERID
-        ('(' parameter_types+=ConstraintParameter[','] ')')?
         ('applies' 'to' (applies_to_attribute?=/attribute|attr/ |
                          applies_to_entity?='entity')+['and'])?
-;
-
-ConstraintParameter:
-    'int' | 'string' | 'attr' | '...'
 ;
 
 ERID:
