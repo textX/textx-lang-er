@@ -58,7 +58,7 @@ Reference:
 
 Entity:
     'entity' name=FQID label=STRING?
-     ('[' constraints*=Constraint[','] ']')? '{'
+     (':' constraints*=Constraint[','] )? '{'
         desc*=STRING
         attributes*=Attribute
         compartments*=Compartment
