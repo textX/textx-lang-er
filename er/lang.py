@@ -8,6 +8,16 @@ __import__ = ['meta']
 _meta = None
 
 
+def get_constraint(obj, name):
+    """
+    Get a constraint vith the given name for the given object.
+    If constraint is not specified for the object returns None.
+    """
+    for c in obj.constraints:
+        if c.type.name == name:
+            return c
+
+
 class Entity(object):
     def __init__(self, parent, name, label=None, extends=None,
                  constraints=None, desc=None, attributes=None,
