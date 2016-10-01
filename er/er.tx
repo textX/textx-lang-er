@@ -13,7 +13,6 @@ ModelElement:
     Entity | Enum
 ;
 
-
 Attribute:
     id?='#'
     name=ERID
@@ -38,7 +37,6 @@ TypeInstance:
 Constraint:
     type=[ConstraintType] ('(' parameters+=BASETYPE[','] ')')?
 ;
-
 
 Type:
     Entity | Enum | DataType
