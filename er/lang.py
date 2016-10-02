@@ -113,9 +113,14 @@ def attribute_processor(attr):
     # Sanity checks
     m = attr.multiplicity
     if m.lower not in [0, 1]:
-        raise TextXSemanticError('Lower bound must be 0 or 1.')
+        raise TextXSemanticError('Attribute "{}". Lower bound must be 0 or 1.'
+                                 .format(attr.name))
     if type(m.upper) is int and m.upper != 1:
-        raise TextXSemanticError('Upper bound must be 1 or *.')
+        raise TextXSemanticError('Attribute "{}". Upper bound must be 1 or *.'.
+                                 format(attr.name))
+    if m.upper == '*' and attr.id:
+        raise TextXSemanticError('Attribute "{}". Key attributes can\'t have '
+                                 '* multiplicity.'.format(attr.name))
 
 
 def main():
