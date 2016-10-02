@@ -32,9 +32,7 @@ setup(
     url = URL,
     download_url = DOWNLOAD_URL,
     packages = ["er"],
-    package_data={
-        'er': ['*.tx'],
-    },
+    include_package_data=True,
     install_requires = ["textX"],
     keywords = "tools language DSL",
     entry_points={
