@@ -51,7 +51,8 @@ class ConstraintType(object):
                  applies_to_attribute=False, applies_to_entity=False):
         self.parent = parent
         self.name = name
-        self.parameter_types=[] if parameter_types is None else parameter_types
+        self.parameter_types = [] \
+            if parameter_types is None else parameter_types
 
         if not applies_to_attribute and not applies_to_entity:
             self.applies_to_attribute = True
@@ -111,7 +112,7 @@ def attribute_processor(attr):
 
     # Sanity checks
     m = attr.multiplicity
-    if m.lower not in [0,1]:
+    if m.lower not in [0, 1]:
         raise TextXSemanticError('Lower bound must be 0 or 1.')
     if type(m.upper) is int and m.upper != 1:
         raise TextXSemanticError('Upper bound must be 1 or *.')
@@ -137,6 +138,3 @@ def main():
                 'Attribute': attribute_processor
              })
     return _meta
-
-
-
