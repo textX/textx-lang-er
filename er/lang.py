@@ -18,6 +18,35 @@ def get_constraint(obj, name):
             return c
 
 
+def parent_entity(obj):
+    """
+    Returns direct or indirect parent entity object if exists or None.
+    """
+    return parent_of_type(obj, "Entity")
+
+
+def meta_name(obj):
+    """
+    Returns meta type name of the given object.
+    """
+    return obj.__class__.__name__
+
+
+def is_entity_ref(attr):
+    return meta_name(attr_type(attr)) == 'Entity'
+
+
+def is_enum_ref(attr):
+    return meta_name(attr_type(attr)) == 'Enum'
+
+
+def attr_type(attr):
+    """
+    Returns attribute type.
+    """
+    return attr.type.type
+
+
 class Entity(object):
     def __init__(self, parent, name, label=None, extends=None,
                  constraints=None, desc=None, attributes=None,
