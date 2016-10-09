@@ -1,5 +1,6 @@
 from os.path import join, dirname
 from textx.metamodel import metamodel_from_file
+from textx.model import parent_of_type, children_of_type
 from textx.exceptions import TextXSemanticError
 
 __import__ = ['meta']
@@ -152,6 +153,26 @@ def attribute_processor(attr):
                                  '* multiplicity.'.format(attr.name))
 
 
+def entity_processor(ent):
+    """
+    Validates entities.
+    """
+    # Collect all referenced entities without other side attr name spec.
+    referenced_entities = set()
+
+    for attr in children_of_type(ent, "Attribute"):
+        if is_entity_ref(attr):
+            if not attr.ref or not attr.ref.other_side:
+                if id(attr_type(attr)) in referenced_entities:
+                    raise TextXSemanticError(
+                        'In entity "{}". Multiple references to Entity "{}" '
+                        'without other side '
+                        'attr name specification. Specify other side name '
+                        'using "<->" syntax.'.format(parent_entity(attr).name,
+                                                    attr_type(attr).name))
+                referenced_entities.add(id(attr_type(attr)))
+
+
 def main():
     """
     Entity-Relationship language.
@@ -169,6 +190,7 @@ def main():
         )
         _meta.register_obj_processors(
             {
-                'Attribute': attribute_processor
+                'Attribute': attribute_processor,
+                'Entity': entity_processor,
              })
     return _meta
