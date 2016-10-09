@@ -69,7 +69,7 @@ DataType:
 
 Enum:
     'enum' name=ERID label=STRING? '{'
-        enum_literals+=EnumLiteral
+        literals+=EnumLiteral
     '}'
 ;
 
