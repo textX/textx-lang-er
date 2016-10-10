@@ -152,6 +152,11 @@ def attribute_processor(attr):
         raise TextXSemanticError('Attribute "{}". Key attributes can\'t have '
                                  '* multiplicity.'.format(attr.name))
 
+    if not is_entity_ref(attr) and m.upper == '*':
+        raise TextXSemanticError('Attribute "{}". Can\'t use '
+                                 '* multiplicity for non-reference type.'
+                                 .format(attr.name))
+
 
 def entity_processor(ent):
     """
