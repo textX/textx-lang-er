@@ -112,9 +112,6 @@ data_types = {
 constraints = {
     'unique': ConstraintType(None, 'unique', applies_to_attribute=True),
     'ordered': ConstraintType(None, 'ordered', applies_to_attribute=True),
-    'dbname': ConstraintType(None, 'dbname', applies_to_attribute=True,
-                             applies_to_entity=True),
-    'fk_cols': ConstraintType(None, 'fk_names', applies_to_attribute=True),
     'positive': ConstraintType(None, 'positive', applies_to_attribute=True),
     'upper_case': ConstraintType(None, 'upper_case', applies_to_attribute=True),
     'lower_case': ConstraintType(None, 'lower_case', applies_to_attribute=True),
@@ -126,6 +123,7 @@ def attribute_processor(attr):
     """
     Called for each attribute.
     """
+    entity = parent_of_type(attr, "Entity")
 
     if attr.multiplicity is None:
         # Default multiplicity is 1,1
