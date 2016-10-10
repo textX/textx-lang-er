@@ -156,15 +156,30 @@ def attribute_processor(attr):
         raise TextXSemanticError('Attribute "{}". Can\'t use '
                                  '* multiplicity for non-reference type.'
                                  .format(attr.name))
+    # Check constraints
+    for c in attr.constraints:
+        if not c.type.applies_to_attribute:
+            raise TextXSemanticError('In "{}.{}". Constraint "{}" can not '
+                                     'be applied to Entity.'
+                                     .format(entity.name, attr.name,
+                                             c.type.name))
 
 
 def entity_processor(ent):
     """
     Validates entities.
     """
+
+    # Check constraints
+    for c in ent.constraints:
+        if not c.type.applies_to_entity:
+            raise TextXSemanticError('In Entity "{}". Constraint "{}" can not '
+                                     'be applied to Entity.'
+                                     .format(ent.name, c.type.name))
+
     # Collect all referenced entities without other side attr name spec.
     referenced_entities = set()
-
+    attr_names = set()
     for attr in children_of_type(ent, "Attribute"):
         if is_entity_ref(attr):
             if not attr.ref or not attr.ref.other_side:
@@ -174,9 +189,13 @@ def entity_processor(ent):
                         'without other side '
                         'attr name specification. Specify other side name '
                         'using "<->" syntax.'.format(parent_entity(attr).name,
-                                                    attr_type(attr).name))
+                                                     attr_type(attr).name))
                 referenced_entities.add(id(attr_type(attr)))
 
+        if attr.name in attr_names:
+            raise TextXSemanticError('Attribute "{}" defined more than once for'
+                                     ' entity {}.'.format(attr.name, ent.name))
+        attr_names.add(attr.name)
 
 def main():
     """
