@@ -18,7 +18,7 @@ def ervis(model_file, debug):
     m = check_load_model(model_file, debug)
 
     click.echo("Generating '%s.dot' file for model." % model_file)
-    click.echo("To convert to png run 'dot -Tpng -O %s.dot'" % model_file)
+    click.echo("To convert to PDF run 'dot -Tpdf -O %s.dot'" % model_file)
     model_export(m, "%s.dot" % model_file)
 
 
