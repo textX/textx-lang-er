@@ -67,7 +67,8 @@ def model_export(model, file_name):
                 return ""
             else:
                 return " [{}{}] ".format(m.lower,
-                                    ",{}".format(m.upper) if m.upper else "")
+                                         ",{}".format(m.upper)
+                                         if m.upper else "")
 
         def _export_compartment(comp):
             res = "|-[ {} ]-\\l".format(comp.label)
@@ -77,14 +78,15 @@ def model_export(model, file_name):
 
         def _export_enum(enum):
             res = "Enum {}{}|".format(enum.name,
-                                 "\\n'{}'".format(enum.label)
-                                 if enum.label else "")
+                                      "\\n'{}'".format(enum.label)
+                                      if enum.label else "")
             for lit in enum.literals:
                 res += "{}: '{}' '{}'\\l".format(lit.name, lit.code, lit.label)
             return res
 
         def _export_element(elem):
-            if elem in processed_set: return
+            if elem in processed_set:
+                return
             color = ""
             res = ""
             elem_type = elem.__class__.__name__
@@ -110,7 +112,6 @@ def model_export(model, file_name):
                 else:
                     if c >= 2:
                         color = " fillcolor=coral"
-
 
             elif elem_type == 'Enum':
                 res += _export_enum(elem)
