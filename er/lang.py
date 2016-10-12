@@ -158,7 +158,7 @@ def attribute_processor(attr):
     for c in attr.constraints:
         if not c.type.applies_to_attribute:
             raise TextXSemanticError('In "{}.{}". Constraint "{}" can not '
-                                     'be applied to Entity.'
+                                     'be applied to attribute.'
                                      .format(entity.name, attr.name,
                                              c.type.name))
 
