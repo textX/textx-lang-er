@@ -79,7 +79,7 @@ def model_export(model, file_name):
             res = "Enum {}{}|".format(enum.name,
                                  "\\n'{}'".format(enum.label)
                                  if enum.label else "")
-            for lit in enum.enum_literals:
+            for lit in enum.literals:
                 res += "{}: '{}' '{}'\\l".format(lit.name, lit.code, lit.label)
             return res
 
