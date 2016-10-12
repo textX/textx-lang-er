@@ -35,7 +35,15 @@ TypeInstance:
 ;
 
 Constraint:
-    type=[ConstraintType] ('(' parameters+=BASETYPE[','] ')')?
+    type=[ConstraintType] ('(' parameters+=ConstraintParamValue[','] ')')?
+;
+
+ConstraintParamValue:
+    FQN | BASETYPE
+;
+
+FQN[noskipws]:
+    /\s*/- ID ('.' ID)*
 ;
 
 Type:
