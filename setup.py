@@ -47,7 +47,7 @@ setup(
     license = LICENSE,
     url = URL,
     download_url = DOWNLOAD_URL,
-    packages = ["er"],
+    packages = ["er", "er.cli"],
     include_package_data=True,
     install_requires = ["textX"],
     keywords = "tools language DSL",
